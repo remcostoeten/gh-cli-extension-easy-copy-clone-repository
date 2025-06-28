@@ -1,32 +1,153 @@
 #!/usr/bin/env bash
 
 # gh-repo-fuzzy - GitHub CLI extension for fuzzy repository search
-# This is a placeholder script that will be implemented in future steps
+# Interactive fuzzy picker with copy/clone functionality
 
 set -e
 
+# Function to copy text to clipboard with fallback options
+copy_to_clipboard() {
+    local text="$1"
+    
+    if command -v wl-copy >/dev/null 2>&1; then
+        echo "$text" | wl-copy
+        echo "✓ Copied '$text' to clipboard (using wl-copy)"
+    elif command -v xclip >/dev/null 2>&1; then
+        echo "$text" | xclip -selection clipboard
+        echo "✓ Copied '$text' to clipboard (using xclip)"
+    else
+        echo "⚠ Clipboard utilities not found. Please install 'wl-clipboard' or 'xclip'"
+        echo "Repository name: $text"
+        echo "Manual copy required."
+        return 1
+    fi
+}
+
+# Function to clone repository
+clone_repo() {
+    local repo="$1"
+    echo "Cloning repository: $repo"
+    gh repo clone "$repo"
+}
+
+# Main fuzzy picker function
+run_fuzzy_picker() {
+    # Check if gh CLI is available
+    if ! command -v gh >/dev/null 2>&1; then
+        echo "Error: GitHub CLI (gh) is not installed or not in PATH"
+        exit 1
+    fi
+    
+    # Check if fzf is available
+    if ! command -v fzf >/dev/null 2>&1; then
+        echo "Error: fzf is not installed or not in PATH"
+        exit 1
+    fi
+    
+    # Fetch repository list
+    echo "Fetching repositories..."
+    local repos
+    repos=$(gh repo list --limit 1000 --json nameWithOwner --jq '.[].nameWithOwner' 2>/dev/null)
+    
+    # Check if we got any repositories
+    if [ -z "$repos" ]; then
+        echo "No repositories found or failed to fetch repositories."
+        echo "Make sure you're authenticated with 'gh auth login'"
+        exit 1
+    fi
+    
+    # Create header with key bindings
+    local header="Keys: ENTER=copy to clipboard, CTRL-C=clone repository, ESC=cancel"
+    
+    # Run fzf with key bindings
+    local selected_repo
+    selected_repo=$(echo "$repos" | fzf \
+        --ansi \
+        --prompt="Select repo > " \
+        --header="$header" \
+        --bind 'ctrl-c:accept+execute-silent(echo clone:{})' \
+        --bind 'enter:accept+execute-silent(echo copy:{})' \
+        --print-query \
+        --expect=ctrl-c,enter 2>/dev/null)
+    
+    local exit_code=$?
+    
+    # Handle picker cancellation (ESC pressed)
+    if [ $exit_code -eq 130 ]; then
+        echo "Operation cancelled"
+        exit 130
+    fi
+    
+    # Parse fzf output
+    local action=""
+    local repo=""
+    
+    # fzf returns multiple lines: query, key, selected_item
+    local lines=()
+    while IFS= read -r line; do
+        lines+=("$line")
+    done <<< "$selected_repo"
+    
+    if [ ${#lines[@]} -ge 2 ]; then
+        local key="${lines[1]}"
+        local item="${lines[2]}"
+        
+        if [ "$key" = "ctrl-c" ]; then
+            action="clone"
+            repo="$item"
+        elif [ "$key" = "enter" ] || [ -z "$key" ]; then
+            action="copy"
+            repo="$item"
+        fi
+    fi
+    
+    # If no repository selected, exit
+    if [ -z "$repo" ]; then
+        echo "No repository selected"
+        exit 0
+    fi
+    
+    # Execute the action
+    case "$action" in
+        "copy")
+            if ! copy_to_clipboard "$repo"; then
+                exit 1
+            fi
+            ;;
+        "clone")
+            clone_repo "$repo"
+            ;;
+        *)
+            echo "Unknown action: $action"
+            exit 1
+            ;;
+    esac
+}
+
 # Display help information
 show_help() {
-    cat << EOF
+    cat <<EOF
 gh-repo-fuzzy - GitHub CLI extension for fuzzy repository search
 
 USAGE:
-    gh repo-fuzzy [OPTIONS] [COMMAND]
-
-COMMANDS:
-    search <query>    Search repositories with fuzzy matching
-    copy             Copy repository URL to clipboard
-    clone            Clone selected repository
+    gh repo-fuzzy [OPTIONS]
 
 OPTIONS:
     -h, --help       Show this help message
     -v, --version    Show version information
 
+KEY BINDINGS:
+    ENTER            Copy repository name to clipboard
+    CTRL-C           Clone repository
+    ESC              Cancel and exit
+
 EXAMPLES:
-    gh repo-fuzzy
-    gh repo-fuzzy search "my-project"
-    gh repo-fuzzy copy
-    gh repo-fuzzy clone
+    gh repo-fuzzy    # Start interactive picker
+
+REQUIREMENTS:
+    - GitHub CLI (gh) must be installed and authenticated
+    - fzf must be installed
+    - For clipboard: wl-clipboard (Wayland) or xclip (X11)
 
 EOF
 }
@@ -47,17 +168,11 @@ main() {
             show_version
             exit 0
             ;;
-        search|copy|clone)
-            echo "Command '$1' not yet implemented. This is a placeholder."
-            exit 1
-            ;;
         "")
-            echo "Interactive fuzzy search not yet implemented. This is a placeholder."
-            echo "Use 'gh repo-fuzzy --help' for available options."
-            exit 1
+            run_fuzzy_picker
             ;;
         *)
-            echo "Error: Unknown command '$1'"
+            echo "Error: Unknown option '$1'"
             echo "Use 'gh repo-fuzzy --help' for available options."
             exit 1
             ;;

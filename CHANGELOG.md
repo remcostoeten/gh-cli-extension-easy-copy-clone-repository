@@ -8,11 +8,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
+### Changed
+### Fixed
+
+## [0.2.0] - 2024-06-28
+
+### Added
 - Comprehensive README documentation with installation instructions
 - Key bindings table for better user guidance
 - Troubleshooting section for common clipboard issues
 - Usage examples and demo placeholder
 - Development guidelines for contributors
+- Semantic versioning system implementation
 
 ### Changed
 - Updated installation instructions to use correct repository path

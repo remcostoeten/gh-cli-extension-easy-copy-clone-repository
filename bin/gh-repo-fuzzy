@@ -3,6 +3,8 @@
 # gh-repo-fuzzy - GitHub CLI extension for fuzzy repository search
 # Interactive fuzzy picker with copy/clone functionality
 
+export VERSION=0.1.0
+
 set -e
 
 # Function to copy text to clipboard with fallback options
@@ -154,7 +156,7 @@ EOF
 
 # Display version information
 show_version() {
-    echo "gh-repo-fuzzy version 0.1.0"
+    echo "gh-repo-fuzzy version $VERSION"
 }
 
 # Main function

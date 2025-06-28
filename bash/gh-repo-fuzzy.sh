@@ -1,13 +1,13 @@
-#!/bin/zsh
+#!/bin/bash
 
-# Zsh shell wrapper for gh-repo-fuzzy
-# Source this file to enable gh-repo-fuzzy functions in Zsh shell
-# Usage: source zsh/_gh-repo-fuzzy
+# Bash shell wrapper for gh-repo-fuzzy
+# Source this file to enable gh-repo-fuzzy functions in Bash shell
+# Usage: source bash/gh-repo-fuzzy.sh
 
 # Function to run gh-repo-fuzzy
 function gh-repo-fuzzy() {
     # Get the directory where this script is located
-    local script_dir="${0:A:h}"
+    local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
     local main_executable="$script_dir/../bin/gh-repo-fuzzy"
     
     # Forward all arguments to the main executable
@@ -21,3 +21,6 @@ function gh-repo-fuzzy() {
 
 # Optional: Create an alias for convenience
 alias grf='gh-repo-fuzzy'
+
+# Export the function to make it available in subshells
+export -f gh-repo-fuzzy

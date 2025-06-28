@@ -1,0 +1,4 @@
+name: repo-fuzzy
+owner: gh-cli-extension
+host: github.com
+tag: latest

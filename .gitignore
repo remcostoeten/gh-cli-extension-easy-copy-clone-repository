@@ -43,3 +43,25 @@ logs/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Development and testing files
+gh-select-test*
+gh-select-debug*
+gh-select-old*
+gh-select-backup*
+*-test.sh
+*-debug.sh
+*-old.sh
+test-*
+debug-*
+
+# Demo generation files (keep only final versions)
+*.cast
+create-*demo*.sh
+record-*.sh
+
+# Backup and duplicate files
+*.bak
+*.backup
+*-copy
+*-duplicate

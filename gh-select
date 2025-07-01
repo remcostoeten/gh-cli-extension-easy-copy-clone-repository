@@ -43,16 +43,24 @@ copy_to_clipboard() {
     return 1
 }
 
+
+# Function to center text
+center_text() {
+    local term_width=$(tput cols)
+    local text="$1"
+    local text_length=${#text}
+    local padding=$(( (term_width - text_length) / 2 ))
+    printf "%*s%s\n" $padding "" "$text"
+}
+
 # Header
 echo
-echo "╭─────────────────────────────────────────╮"
-echo "│          GitHub Repository Selector        │"
-echo "├─────────────────────────────────────────┤"
-echo "│  Interactive repository selection tool  │"
-echo "│                                         │"
-echo "│         Created by Remco Stoeten        │"
-echo "│           @remcostoeten                 │"
-echo "╰─────────────────────────────────────────╯"
+center_text "╭─────────────────────────────────────────╮"
+center_text "│        GitHub Repository Selector       │"
+center_text "├─────────────────────────────────────────┤"
+center_text "│  View, copy  & clone finally fixed..    │"
+center_text "│  Created by github.com/remcostoeten     │"
+center_text "╰─────────────────────────────────────────╯"
 echo
 
 # Check dependencies

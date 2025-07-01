@@ -1,5 +1,9 @@
 # 🔍 gh-select - Interactive Repository Selector
 
+![gh-select Demo](./gh-select-demo-web.gif)
+
+*Interactive repository selection with fuzzy search, enhanced colors, and smooth animations*
+
 [![GitHub](https://img.shields.io/badge/GitHub-Extension-blue)](https://github.com/remcostoeten/gh-repo-select-extension)
 [![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 [![Platform](https://img.shields.io/badge/Platform-Unix%2FLinux%2FmacOS-lightgrey)](#compatibility)
@@ -8,9 +12,10 @@ A **native GitHub CLI extension** that adds interactive repository selection fun
 
 ## 🎯 Why?
 
-The GitHub CLI (`gh`) has some UX limitations when working with repositories:
+The GitHub CLI (`gh`) is ***absolutely* terrible**. The native `gh repo list` command is completely useless on smaller screens,  cloning is annoying with long/unknown names.. 🗣️🗣️🗣️
 
 - ❌ No interactive way to browse through your repositories
+
 - ❌ `gh repo list` output gets truncated on smaller screens
 - ❌ Forces you to manually copy repository names or navigate to GitHub web
 - ❌ No fuzzy search or filtering capabilities
@@ -92,13 +97,7 @@ gh select --help
 gh select --version
 ```
 
-## 🎬 Demo
-
-Run the included demo script to see the extension in action and check your setup:
-
-```bash
-./demo.sh
-```
+## 🎬 ./demo.sh
 
 **Demo Output:**
 
@@ -199,61 +198,26 @@ The bottom panel shows additional repository information as you navigate.
 - Fallback display if clipboard unavailable
 - Cross-platform compatibility
 
-### 🎨 Beautiful Interface
-- Colorful, modern terminal UI
-- Unicode icons and borders
-- Loading animations
-- Clear status messages
-
-## 🔧 Technical Details
-
-### Architecture
-- **Native Bash script** - No external runtime dependencies
-- **GitHub CLI integration** - Uses official `gh` API calls
-- **Extension spec compliant** - Follows GitHub CLI extension standards
-- **Cross-platform** - Works on all Unix-like systems
-
-### Performance
-- **Fast startup** - Minimal overhead
-- **Efficient API usage** - Single API call to fetch repositories
-- **Responsive UI** - Instant search filtering
-- **Memory efficient** - Temporary file cleanup
+ 
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+you do you brotha 
 
-### Development Setup
 
-```bash
-# Clone the repository
-git clone https://github.com/remcostoeten/gh-repo-select-extension.git
-cd gh-repo-select-extension
-
-# Install locally for testing
-gh extension install .
-
-# Test the extension
-gh select --help
-```
-
-### Reporting Issues
-
-Please report bugs and feature requests on the [GitHub Issues](https://github.com/remcostoeten/gh-repo-select-extension/issues) page.
 
 ## 📄 License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## 👨‍💻 Author
+
+
+xxxx,
 
 **Remco Stoeten**
-
-- GitHub: [@remcostoeten](https://github.com/remcostoeten)
-- Website: [remcostoeten.com](https://remcostoeten.com)
 
 ---
 
 ⭐ **If this extension helped you, please star the repository!** ⭐
 
-It really helps with motivation and lets others discover this tool.
+It helps me grow my e-penor. More stars = more

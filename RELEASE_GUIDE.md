@@ -10,6 +10,9 @@
 - [x] extension.yml configured
 - [x] install.sh script ready
 - [x] Credits added to script header
+- [x] Codebase cleaned (removed duplicates and test files)
+- [x] Demo GIF created and optimized
+- [x] .gitignore updated to prevent future clutter
 
 ### 📋 Still Needed
 

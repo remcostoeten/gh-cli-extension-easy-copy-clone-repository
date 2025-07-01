@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+# Repo selector with full info
+set -e
+
+echo "Fetching repositories with full info..." >&2
+
+# Get repos with all info and format for fzf
+gh repo list --limit 1000 | \
+tail -n +4 | \
+fzf --height=90% \
+    --layout=reverse \
+    --prompt="🔍 Select repo: " \
+    --header="Navigate: ↑/↓ | Filter: type | Select: Enter | Preview: →" \
+    --preview='echo {} | awk "{print \$1}" | xargs gh repo view' \
+    --preview-window=right:50%:wrap \
+    --tabstop=4 \
+    --bind="ctrl-c:abort,esc:abort" | \
+awk '{print $1}'

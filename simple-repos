@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+# Minimal repo selector
+set -e
+
+echo "Fetching repositories..." >&2
+
+# Simple approach - just repo names with fzf
+gh repo list --limit 1000 | \
+awk '{print $1}' | \
+fzf --height=80% \
+    --layout=reverse \
+    --prompt="Select repo: " \
+    --header="Navigate: ↑/↓ | Filter: type | Select: Enter" \
+    --preview='gh repo view {}' \
+    --preview-window=right:60%:wrap

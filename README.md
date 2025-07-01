@@ -18,21 +18,21 @@ The GitHub CLI (`gh`) has some UX limitations when working with repositories:
 
 ## ✨ What This Extension Does
 
-🎉 **Interactive Repository Selection**: Browse all your repositories with a beautiful, interactive interface
+🎉 **Interactive Repository Selection**: Browse all your repositories with a clean, interactive interface
 
 🔍 **Fuzzy Search**: Type to filter repositories instantly
 
-⌨️ **Keyboard Navigation**: Use arrow keys (↑/↓) or vim-style (j/k) navigation
+⌨️ **Keyboard Navigation**: Use arrow keys to navigate through repositories
 
-📊 **Rich Information**: See repository descriptions, privacy status, and last update dates
+📊 **Rich Information**: See repository descriptions and privacy status (🌍 public / 🔒 private)
 
 🎬 **Live Preview**: View repository details as you navigate
 
 🚀 **Multiple Actions**: Clone, copy name/URL, or open in browser
 
-📁 **Custom Clone Paths**: Choose where to clone repositories
+📋 **Universal Clipboard**: Works across Linux, macOS, and WSL
 
-🌈 **Beautiful UI**: Colorful, intuitive interface with Unicode icons
+🌍 **Cross-Platform**: Reliable operation on all Unix-like systems
 
 ## 🛠 Installation
 

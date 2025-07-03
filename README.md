@@ -49,20 +49,54 @@ Make sure you have these tools installed:
 - **fzf** (fuzzy finder) - `brew install fzf` (macOS) or `apt install fzf` (Ubuntu)
 - **jq** (JSON processor) - `brew install jq` (macOS) or `apt install jq` (Ubuntu)
 
-### Install the Extension
+### Quick Install (Recommended)
 
+#### 🎯 One-Line Install
 ```bash
-# Install from GitHub
-gh extension install remcostoeten/gh-repo-select-extension
-
-# Or install locally for development
-gh extension install .
+# Install for current user only (integrates with GitHub CLI)
+curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository/master/install.sh | bash
 ```
+
+#### 🌍 Global Install (All Users)
+```bash
+# Download and install globally (requires sudo)
+curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository/master/install.sh | sudo bash -s -- --global
+```
+
+### Manual Installation
+
+#### For Current User (GitHub CLI Extension)
+```bash
+git clone https://github.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository.git
+cd gh-cli-extension-easy-copy-clone-repository
+./install.sh
+```
+
+#### For All Users (Global Installation)
+```bash
+git clone https://github.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository.git
+cd gh-cli-extension-easy-copy-clone-repository
+sudo ./install.sh --global
+```
+
+### Installation Options
+
+| Method | Command | Benefits | Usage |
+|--------|---------|----------|---------|
+| **User Install** | `./install.sh` | Integrates with GitHub CLI | `gh select` |
+| **Global Install** | `sudo ./install.sh --global` | Available to all users | `gh-select` |
+| **Force Install** | `./install.sh --force` | Overwrites existing installation | `gh select` |
 
 ### Verify Installation
 
 ```bash
-gh select --version
+# For user installation
+gh select --help
+gh extension list
+
+# For global installation
+gh-select --help
+which gh-select
 ```
 
 ## 🚀 Usage

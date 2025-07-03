@@ -99,6 +99,65 @@ gh-select --help
 which gh-select
 ```
 
+## 🗑️ Uninstallation
+
+### Quick Uninstall
+
+#### Remove User Installation (GitHub CLI Extension)
+```bash
+# One-line uninstall
+curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository/master/uninstall.sh | bash
+
+# Or using GitHub CLI directly
+gh extension remove select
+```
+
+#### Remove Global Installation
+```bash
+# One-line global uninstall
+curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository/master/uninstall.sh | sudo bash -s -- --global
+
+# Or manually
+sudo rm /usr/local/bin/gh-select
+```
+
+### Manual Uninstallation
+
+#### Using the Uninstall Script
+```bash
+git clone https://github.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository.git
+cd gh-cli-extension-easy-copy-clone-repository
+
+# Remove user installation
+./uninstall.sh
+
+# Remove global installation
+sudo ./uninstall.sh --global
+
+# Remove all installations without confirmation
+./uninstall.sh --force
+```
+
+### Uninstall Options
+
+| Method | Command | What it removes |
+|--------|---------|----------------|
+| **User Uninstall** | `./uninstall.sh` | GitHub CLI extension (`gh select`) |
+| **Global Uninstall** | `sudo ./uninstall.sh --global` | System-wide command (`gh-select`) |
+| **Force Uninstall** | `./uninstall.sh --force` | All installations without prompts |
+| **GitHub CLI** | `gh extension remove select` | User installation only |
+
+### Verify Uninstallation
+
+```bash
+# Check if extension is removed
+gh extension list | grep select
+
+# Check if global command is removed
+which gh-select
+gh-select --help  # Should show "command not found"
+```
+
 ## 🚀 Usage
 
 ### Basic Usage

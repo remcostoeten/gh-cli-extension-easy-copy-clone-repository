@@ -2,6 +2,61 @@
 
 set -e
 
+# Version info
+VERSION="1.0.0"
+AUTHOR="Remco Stoeten"
+REPO="https://github.com/remcostoeten/gh-repo-select-extension"
+
+# Handle command line arguments
+if [[ $# -gt 0 ]]; then
+    case "$1" in
+        --version|-v)
+            echo "gh-select v${VERSION}"
+            echo "Created by ${AUTHOR}"
+            echo "Repository: ${REPO}"
+            exit 0
+            ;;
+        --help|-h)
+            echo "gh-select - Interactive GitHub Repository Selector"
+            echo ""
+            echo "USAGE:"
+            echo "    gh select [OPTIONS]"
+            echo ""
+            echo "OPTIONS:"
+            echo "    --version, -v    Show version information"
+            echo "    --help, -h       Show this help message"
+            echo ""
+            echo "FEATURES:"
+            echo "    🔍 Interactive repository selection with fuzzy search"
+            echo "    📁 Clone repositories to any location"
+            echo "    📋 Copy repository names or URLs to clipboard"
+            echo "    🌐 Open repositories in browser"
+            echo "    🎨 Beautiful interface with live preview"
+            echo ""
+            echo "DEPENDENCIES:"
+            echo "    • GitHub CLI (gh) - https://cli.github.com/"
+            echo "    • fzf (fuzzy finder) - brew install fzf or apt install fzf"
+            echo "    • jq (JSON processor) - brew install jq or apt install jq"
+            echo ""
+            echo "EXAMPLES:"
+            echo "    gh select              # Launch interactive selector"
+            echo "    gh select --help       # Show this help"
+            echo "    gh select --version    # Show version"
+            echo ""
+            echo "For more information: ${REPO}"
+            exit 0
+            ;;
+        repo)
+            # Allow 'gh select repo' as mentioned in README
+            ;;
+        *)
+            echo "Unknown option: $1"
+            echo "Use 'gh select --help' for usage information"
+            exit 1
+            ;;
+    esac
+fi
+
 # Cross-platform clipboard function
 copy_to_clipboard() {
     local text="$1"
@@ -44,32 +99,64 @@ copy_to_clipboard() {
 }
 
 
-# Function to center text
-center_text() {
-    local term_width=$(tput cols)
-    local text="$1"
-    local text_length=${#text}
-    local padding=$(( (term_width - text_length) / 2 ))
-    printf "%*s%s\n" $padding "" "$text"
-}
 
-# Header
-echo
-center_text "╭─────────────────────────────────────────╮"
-center_text "│        GitHub Repository Selector       │"
-center_text "├─────────────────────────────────────────┤"
-center_text "│  View, copy  & clone finally fixed..    │"
-center_text "│  Created by github.com/remcostoeten     │"
-center_text "╰─────────────────────────────────────────╯"
-echo
-
-# Check dependencies
-for cmd in gh fzf jq; do
-    if ! command -v "$cmd" >/dev/null 2>&1; then
-        echo "Error: $cmd is required"
+# Enhanced dependency checking with installation guidance
+check_dependencies() {
+    local missing_deps=()
+    local error_messages=()
+    
+    # Check GitHub CLI
+    if ! command -v gh >/dev/null 2>&1; then
+        missing_deps+=("gh")
+        error_messages+=("❌ GitHub CLI (gh) is not installed")
+        error_messages+=("   📦 Install: https://cli.github.com/")
+        error_messages+=("   🍺 macOS: brew install gh")
+        error_messages+=("   🐧 Ubuntu/Debian: curl -fsSL https://cli.github.com/packages/githubcli-archive-keyring.gpg | sudo dd of=/usr/share/keyrings/githubcli-archive-keyring.gpg")
+        error_messages+=("        echo \"deb [arch=\$(dpkg --print-architecture) signed-by=/usr/share/keyrings/githubcli-archive-keyring.gpg] https://cli.github.com/packages stable main\" | sudo tee /etc/apt/sources.list.d/github-cli.list > /dev/null")
+        error_messages+=("        sudo apt update && sudo apt install gh")
+        error_messages+=("   🎩 Fedora/CentOS: sudo dnf install gh")
+        error_messages+=("   🪟 Windows: winget install GitHub.cli")
+        error_messages+=("")
+    fi
+    
+    # Check fzf
+    if ! command -v fzf >/dev/null 2>&1; then
+        missing_deps+=("fzf")
+        error_messages+=("❌ fzf (fuzzy finder) is not installed")
+        error_messages+=("   📦 Website: https://github.com/junegunn/fzf")
+        error_messages+=("   🍺 macOS: brew install fzf")
+        error_messages+=("   🐧 Ubuntu/Debian: sudo apt install fzf")
+        error_messages+=("   🎩 Fedora: sudo dnf install fzf")
+        error_messages+=("   📦 Manual: git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf && ~/.fzf/install")
+        error_messages+=("")
+    fi
+    
+    # Check jq
+    if ! command -v jq >/dev/null 2>&1; then
+        missing_deps+=("jq")
+        error_messages+=("❌ jq (JSON processor) is not installed")
+        error_messages+=("   📦 Website: https://jqlang.github.io/jq/")
+        error_messages+=("   🍺 macOS: brew install jq")
+        error_messages+=("   🐧 Ubuntu/Debian: sudo apt install jq")
+        error_messages+=("   🎩 Fedora: sudo dnf install jq")
+        error_messages+=("   🪟 Windows: winget install jqlang.jq")
+        error_messages+=("")
+    fi
+    
+    # If any dependencies are missing, show helpful error and exit
+    if [ ${#missing_deps[@]} -gt 0 ]; then
+        echo "🚨 Missing Dependencies"
+        echo "======================"
+        echo ""
+        printf '%s\n' "${error_messages[@]}"
+        echo "💡 After installing dependencies, run 'gh select' again"
+        echo "📖 For more help: gh select --help"
         exit 1
     fi
-done
+}
+
+# Check all dependencies
+check_dependencies
 
 # Check auth
 if ! gh auth status >/dev/null 2>&1; then
@@ -77,28 +164,23 @@ if ! gh auth status >/dev/null 2>&1; then
     exit 1
 fi
 
-echo "🔍 Fetching your repositories..."
-
 # Create temp file for repositories
 temp_file=$(mktemp)
 trap "rm -f '$temp_file'" EXIT
 
 # Fetch repositories
 if ! gh repo list --json nameWithOwner,description,isPrivate --limit 1000 > "$temp_file" 2>/dev/null; then
-    echo "❌ Failed to fetch repositories"
+    echo "Error: Failed to fetch repositories"
     exit 1
 fi
 
 # Count repos
 repo_count=$(jq length "$temp_file")
-echo "✅ Found $repo_count repositories"
 
 if [ "$repo_count" -eq 0 ]; then
     echo "No repositories found"
     exit 1
 fi
-
-echo
 
 # Create formatted list for fzf
 formatted_repos=$(mktemp)

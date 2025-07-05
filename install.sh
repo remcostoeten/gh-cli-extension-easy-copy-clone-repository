@@ -45,12 +45,75 @@ done
 
 echo "🔍 Installing gh-select extension..."
 
-# Check if GitHub CLI is installed
-if ! command -v gh > /dev/null 2>&1; then
-    echo "❌ GitHub CLI (gh) is not installed"
-    echo "Please install it from: https://cli.github.com/"
-    exit 1
-fi
+# Enhanced dependency checking
+check_install_dependencies() {
+    local missing_deps=()
+    local error_messages=()
+    
+    # Check GitHub CLI
+    if ! command -v gh > /dev/null 2>&1; then
+        missing_deps+=("gh")
+        error_messages+=("❌ GitHub CLI (gh) is required but not installed")
+        error_messages+=("   📦 Install from: https://cli.github.com/")
+        error_messages+=("   🍺 macOS: brew install gh")
+        error_messages+=("   🐧 Ubuntu/Debian: sudo apt update && sudo apt install gh")
+        error_messages+=("   🎩 Fedora: sudo dnf install gh")
+        error_messages+=("   🪟 Windows: winget install GitHub.cli")
+        error_messages+=("")
+    fi
+    
+    # Check fzf
+    if ! command -v fzf > /dev/null 2>&1; then
+        missing_deps+=("fzf")
+        error_messages+=("⚠️  fzf (fuzzy finder) is recommended but not installed")
+        error_messages+=("   📦 Install from: https://github.com/junegunn/fzf")
+        error_messages+=("   🍺 macOS: brew install fzf")
+        error_messages+=("   🐧 Ubuntu/Debian: sudo apt install fzf")
+        error_messages+=("   🎩 Fedora: sudo dnf install fzf")
+        error_messages+=("")
+    fi
+    
+    # Check jq
+    if ! command -v jq > /dev/null 2>&1; then
+        missing_deps+=("jq")
+        error_messages+=("⚠️  jq (JSON processor) is recommended but not installed")
+        error_messages+=("   📦 Install from: https://jqlang.github.io/jq/")
+        error_messages+=("   🍺 macOS: brew install jq")
+        error_messages+=("   🐧 Ubuntu/Debian: sudo apt install jq")
+        error_messages+=("   🎩 Fedora: sudo dnf install jq")
+        error_messages+=("")
+    fi
+    
+    # If GitHub CLI is missing (critical), show error and exit
+    if [[ " ${missing_deps[*]} " =~ " gh " ]]; then
+        echo "🚨 Critical Dependencies Missing"
+        echo "================================"
+        echo ""
+        printf '%s\n' "${error_messages[@]}"
+        echo "💡 Please install GitHub CLI first, then run this installer again"
+        exit 1
+    fi
+    
+    # If optional dependencies are missing, warn but continue
+    if [ ${#missing_deps[@]} -gt 0 ]; then
+        echo "⚠️  Optional Dependencies Missing"
+        echo "=================================="
+        echo ""
+        printf '%s\n' "${error_messages[@]}"
+        echo "💡 gh-select will check for these dependencies when you run it"
+        echo "📋 Installation will continue, but please install missing dependencies"
+        echo ""
+        read -p "Continue with installation? [y/N] " -n 1 -r
+        echo
+        if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+            echo "Installation cancelled"
+            exit 1
+        fi
+        echo ""
+    fi
+}
+
+check_install_dependencies
 
 # Determine installation directory
 if [ "$GLOBAL_INSTALL" = true ]; then

@@ -1,0 +1,39 @@
+{
+  "name": "gh-select",
+  "version": "1.0.0",
+  "description": "Interactive GitHub repository selector CLI extension with fuzzy search",
+  "main": "gh-select",
+  "scripts": {
+    "install": "./install.sh",
+    "uninstall": "./uninstall.sh",
+  },
+  "author": "Remco Stoeten",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/remcostoeten/gh-repo-select-extension.git"
+  },
+  "keywords": [
+    "github",
+    "cli",
+    "extension",
+    "repository",
+    "fuzzy-search",
+    "interactive",
+    "clone",
+    "fzf",
+    "gh"
+  ],
+  "author": "Remco Stoeten",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/remcostoeten/gh-repo-select-extension/issues"
+  },
+  "homepage": "https://github.com/remcostoeten/gh-repo-select-extension#readme",
+  "engines": {
+    "node": ">=12.0.0"
+  },
+  "os": [
+    "darwin",
+    "linux"
+  ]
+}

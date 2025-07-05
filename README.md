@@ -1,43 +1,10 @@
 # 🔍 gh-select - Interactive Repository Selector
 
-![gh-select Demo](./gh-select-demo-web.gif)
+The GitHub CLI's repo command is ***absolutely* terrible**. On smaller screens / views it's unusable,  cloning is annoying with long/unknown names.. 🗣️🗣️🗣️
 
-*Interactive repository selection with fuzzy search, enhanced colors, and smooth animations*
+![gh-select Demo](./gh-select-demo.gif)
 
-[![GitHub](https://img.shields.io/badge/GitHub-Extension-blue)](https://github.com/remcostoeten/gh-repo-select-extension)
-[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
-[![Platform](https://img.shields.io/badge/Platform-Unix%2FLinux%2FmacOS-lightgrey)](#compatibility)
-
-A **native GitHub CLI extension** that adds interactive repository selection functionality to the `gh` command. No more struggling with truncated repository lists or copying names manually!
-
-## 🎯 Why?
-
-The GitHub CLI (`gh`) is ***absolutely* terrible**. The native `gh repo list` command is completely useless on smaller screens,  cloning is annoying with long/unknown names.. 🗣️🗣️🗣️
-
-- ❌ No interactive way to browse through your repositories
-
-- ❌ `gh repo list` output gets truncated on smaller screens
-- ❌ Forces you to manually copy repository names or navigate to GitHub web
-- ❌ No fuzzy search or filtering capabilities
-- ❌ Clunky workflow for discovering and cloning repositories
-
-## ✨ What This Extension Does
-
-🎉 **Interactive Repository Selection**: Browse all your repositories with a clean, interactive interface
-
-🔍 **Fuzzy Search**: Type to filter repositories instantly
-
-⌨️ **Keyboard Navigation**: Use arrow keys to navigate through repositories
-
-📊 **Rich Information**: See repository descriptions and privacy status (🌍 public / 🔒 private)
-
-🎬 **Live Preview**: View repository details as you navigate
-
-🚀 **Multiple Actions**: Clone, copy name/URL, or open in browser
-
-📋 **Universal Clipboard**: Works across Linux, macOS, and WSL
-
-🌍 **Cross-Platform**: Reliable operation on all Unix-like systems
+A **native GitHub CLI extension** that adds interactive repository selection functionality to the `gh` command. No more struggling with truncated repository lists or having to guess repo names or eventually going to web to clone..
 
 ## 🛠 Installation
 
@@ -49,28 +16,20 @@ Make sure you have these tools installed:
 - **fzf** (fuzzy finder) - `brew install fzf` (macOS) or `apt install fzf` (Ubuntu)
 - **jq** (JSON processor) - `brew install jq` (macOS) or `apt install jq` (Ubuntu)
 
-### Quick Install (Recommended)
-
 #### 🎯 One-Line Install
 ```bash
 # Install for current user only (integrates with GitHub CLI)
 curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository/master/install.sh | bash
 ```
 
-#### 🌍 Global Install (All Users)
+#### Install
+
 ```bash
 # Download and install globally (requires sudo)
 curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository/master/install.sh | sudo bash -s -- --global
 ```
 
 ### Manual Installation
-
-#### For Current User (GitHub CLI Extension)
-```bash
-git clone https://github.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository.git
-cd gh-cli-extension-easy-copy-clone-repository
-./install.sh
-```
 
 #### For All Users (Global Installation)
 ```bash
@@ -98,83 +57,19 @@ gh extension list
 gh-select --help
 which gh-select
 ```
-
-## 🗑️ Uninstallation
-
-### Quick Uninstall
-
-#### Remove User Installation (GitHub CLI Extension)
-```bash
-# One-line uninstall
-curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository/master/uninstall.sh | bash
-
-# Or using GitHub CLI directly
-gh extension remove select
-```
-
-#### Remove Global Installation
-```bash
-# One-line global uninstall
-curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository/master/uninstall.sh | sudo bash -s -- --global
-
-# Or manually
-sudo rm /usr/local/bin/gh-select
-```
-
-### Manual Uninstallation
-
-#### Using the Uninstall Script
-```bash
-git clone https://github.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository.git
-cd gh-cli-extension-easy-copy-clone-repository
-
-# Remove user installation
-./uninstall.sh
-
-# Remove global installation
-sudo ./uninstall.sh --global
-
-# Remove all installations without confirmation
-./uninstall.sh --force
-```
-
-### Uninstall Options
-
-| Method | Command | What it removes |
-|--------|---------|----------------|
-| **User Uninstall** | `./uninstall.sh` | GitHub CLI extension (`gh select`) |
-| **Global Uninstall** | `sudo ./uninstall.sh --global` | System-wide command (`gh-select`) |
-| **Force Uninstall** | `./uninstall.sh --force` | All installations without prompts |
-| **GitHub CLI** | `gh extension remove select` | User installation only |
-
-### Verify Uninstallation
-
-```bash
-# Check if extension is removed
-gh extension list | grep select
-
-# Check if global command is removed
-which gh-select
-gh-select --help  # Should show "command not found"
-```
-
 ## 🚀 Usage
 
-### Basic Usage
 
 ```bash
 # Launch interactive repository selector
 gh select
-
-# Alternative syntax (same functionality)
-gh select repo
 ```
 
 ### Available Actions
 
 Once you select a repository, you can:
 
-1. **🔽 Clone Repository** - Clone to current directory or custom path
+21. **🔽 Clone Repository** - Clone to current directory or custom path
 2. **📋 Copy Repository Name** - Copy `owner/repo-name` to clipboard
 3. **🔗 Copy Repository URL** - Copy `https://github.com/owner/repo-name` to clipboard
 4. **🌐 View in Browser** - Open repository on GitHub.com
@@ -190,120 +85,14 @@ gh select --help
 gh select --version
 ```
 
-## 🎬 ./demo.sh
-
-**Demo Output:**
-
-```
-🎬 gh-select Extension Demo
-==========================
-
-📋 This demo will show you the capabilities of the gh-select extension
-
-🔧 First, let's check if all dependencies are installed:
-
-   GitHub CLI (gh): ✅ Installed
-   fzf (fuzzy finder): ✅ Installed
-   jq (JSON processor): ✅ Installed
-   GitHub authentication: ✅ Authenticated
-
-🚀 Available commands:
-   gh select          # Interactive repository selector
-   gh select --help   # Show help information
-   gh select --version # Show version
-
-✨ Features:
-   🔍 Fuzzy search through all your repositories
-   ⌨️  Arrow key navigation (↑/↓) or vim-style (j/k)
-   📊 Repository information (description, privacy, last update)
-   🎬 Live preview of repository details
-   📁 Clone to custom paths
-   📋 Copy repository names or URLs to clipboard
-   🌐 Open repositories in browser
-   🎨 Beautiful colored interface with Unicode icons
-
-🎯 To start the interactive selector, run:
-   gh select
-
-💡 Tips:
-   • Type to filter repositories
-   • Use arrow keys or j/k to navigate
-   • Press Enter to select a repository
-   • Press Esc to cancel
-
-🎉 Enjoy using gh-select!
-```
-
-## 🎮 Interface Guide
-
-### Navigation
-
-- **↑/↓** or **j/k** - Navigate through repositories
-- **Type** - Filter repositories with fuzzy search
-- **Enter** - Select repository
-- **Esc** or **Ctrl+C** - Cancel and exit
-
-### Repository Information
-
-Each repository shows:
-- 📁 **Repository icon**
-- 🌍/🔒 **Privacy indicator** (public/private)
-- **Owner/Name**
-- **Description**
-- **Last updated date**
-
-### Live Preview
-
-The bottom panel shows additional repository information as you navigate.
-
-## 💻 Compatibility
-
-✅ **macOS** - Full support with `pbcopy` for clipboard
-
-✅ **Linux (X11)** - Full support with `xclip` or `xsel`
-
-✅ **Linux (Wayland)** - Full support with `wl-clipboard`
-
-✅ **WSL** - Works with appropriate clipboard utilities
-
-✅ **Any Unix-like system** - Core functionality works everywhere
-
-## 🎨 Features
-
-### 🎯 Smart Repository Detection
-- Fetches up to 1000 repositories
-- Shows both public and private repositories
-- Displays repository metadata (description, privacy, last update)
-
-### 🔍 Advanced Search
-- Real-time fuzzy search filtering
-- Search by repository name, owner, or description
-- Instant results as you type
-
-### 📁 Intelligent Cloning
-- Clone to current directory or specify custom path
-- Automatic directory creation
-- Tilde (`~`) expansion support
-- Helpful navigation suggestions after cloning
-
-### 📋 Universal Clipboard Support
-- Automatic detection of available clipboard utilities
-- Fallback display if clipboard unavailable
-- Cross-platform compatibility
-
- 
-
 ## 🤝 Contributing
 
-you do you brotha 
-
+you do you brotha
 
 
 ## 📄 License
 
 MIT License - see [LICENSE](LICENSE) file for details.
-
-
 
 xxxx,
 
@@ -313,4 +102,4 @@ xxxx,
 
 ⭐ **If this extension helped you, please star the repository!** ⭐
 
-It helps me grow my e-penor. More stars = more
+It helps me grow my e-penor. More stars = more e-karma

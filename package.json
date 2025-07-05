@@ -1,6 +1,6 @@
 {
   "name": "gh-select",
-  "version": "1.0.2",
+  "version": "1.1.0",
   "description": "Interactive GitHub repository selector CLI extension with fuzzy search",
   "main": "gh-select",
   "scripts": {

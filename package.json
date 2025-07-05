@@ -1,13 +1,13 @@
 {
   "name": "gh-select",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Interactive GitHub repository selector CLI extension with fuzzy search",
   "main": "gh-select",
   "scripts": {
     "install": "./install.sh",
     "uninstall": "./uninstall.sh",
+    "cleanup": "./scripts/cleanup.sh"
   },
-  "author": "Remco Stoeten",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/remcostoeten/gh-repo-select-extension.git"

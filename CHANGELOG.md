@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.0.2] - 2025-01-05
+
+### Added
+- 🎬 **Professional 30fps demo GIF** showing real usage workflow
+- 🛠️ **Enhanced dependency checking** with user-friendly installation guidance
+- 📋 **Improved error messages** with platform-specific installation instructions
+- 🧹 **Repository cleanup** - removed redundant files and improved structure
+- ✅ **Better help system** with comprehensive usage examples
+
+### Fixed
+- 📦 **Package.json** structure and metadata
+- 🔧 **Install script** dependency validation with graceful handling
+- 📖 **Documentation** clarity and completeness
+
+### Changed
+- 🎯 **Streamlined codebase** - removed unnecessary demo scripts
+- 🚀 **Improved user experience** for missing dependencies
+- 📋 **Enhanced installation flow** with better error handling
+
 ## [1.0.0] - 2025-01-05
 
 ### Added

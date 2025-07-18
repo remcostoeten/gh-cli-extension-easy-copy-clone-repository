@@ -2,7 +2,7 @@
 
 Interactive GitHub repository selector with fuzzy search.
 
-![gh-select Demo](./gh-select-demo.gif)
+![gh-select Demo](./assets/gh-select-demo.gif)
 
 ## Installation
 

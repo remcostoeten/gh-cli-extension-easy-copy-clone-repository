@@ -16,25 +16,31 @@ Make sure you have these tools installed:
 - **fzf** (fuzzy finder) - `brew install fzf` (macOS) or `apt install fzf` (Ubuntu)
 - **jq** (JSON processor) - `brew install jq` (macOS) or `apt install jq` (Ubuntu)
 
-#### 🎯 One-Line Install
+#### 🎯 GitHub CLI Extension Install (Recommended)
 ```bash
-# Install for current user only (integrates with GitHub CLI)
-curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository/master/install.sh | bash
+# Install as GitHub CLI extension
+gh extension install remcostoeten/gh-select
 ```
 
-#### Install
+#### Alternative: One-Line Install
+```bash
+# Install for current user only (integrates with GitHub CLI)
+curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-select/master/install.sh | bash
+```
+
+#### Global Install
 
 ```bash
 # Download and install globally (requires sudo)
-curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository/master/install.sh | sudo bash -s -- --global
+curl -sSL https://raw.githubusercontent.com/remcostoeten/gh-select/master/install.sh | sudo bash -s -- --global
 ```
 
 ### Manual Installation
 
 #### For All Users (Global Installation)
 ```bash
-git clone https://github.com/remcostoeten/gh-cli-extension-easy-copy-clone-repository.git
-cd gh-cli-extension-easy-copy-clone-repository
+git clone https://github.com/remcostoeten/gh-select.git
+cd gh-select
 sudo ./install.sh --global
 ```
 
